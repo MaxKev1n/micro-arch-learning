@@ -6,36 +6,36 @@
 
 ## Tree
 
-.
-├── gem5 //gem5相关的修改代码及运行结果
-│   ├── cache_code
-│   │   ├── BaseCPU.py
-│   │   ├── CacheConfig.py
-│   │   ├── Caches.py
-│   │   ├── Options.py
-│   │   └── XBar.py
-│   └── stats
-│       ├── coremark_500_cache.txt
-│       └── coremark_500_nocache.txt
-├── img //运行结果或者重要的截图
-│   ├── default_se_coremark.png
-│   ├── default_se_dry.png
-│   ├── default_se_hello.png
-│   ├── default_se_mem.png
-│   ├── l3_se_dry.png
-│   ├── l3_se_hello.png
-│   ├── l3_se_mem.png
-│   ├── qemu_run_coremark_500_cache.png
-│   ├── qemu_run_coremark_500.png
-│   ├── qemu_run_coremark.png
-│   └── se_dry.png
-├── readme.md
-└── thesis //相关的论文
-    ├── Basic_block_distribution_analysis_to_find_periodic_behavior_and_simulation_points_in_applications.pdf
-    └── ieeemicro96_r10000.pdf
-
-5 directories, 21 files
-
+. 
+├── gem5 //gem5相关的修改代码及运行结果 
+│   ├── cache_code 
+│   │   ├── BaseCPU.py 
+│   │   ├── CacheConfig.py 
+│   │   ├── Caches.py 
+│   │   ├── Options.py 
+│   │   └── XBar.py 
+│   └── stats 
+│       ├── coremark_500_cache.txt 
+│       └── coremark_500_nocache.txt 
+├── img //运行结果或者重要的截图 
+│   ├── default_se_coremark.png 
+│   ├── default_se_dry.png 
+│   ├── default_se_hello.png 
+│   ├── default_se_mem.png 
+│   ├── l3_se_dry.png 
+│   ├── l3_se_hello.png 
+│   ├── l3_se_mem.png 
+│   ├── qemu_run_coremark_500_cache.png 
+│   ├── qemu_run_coremark_500.png 
+│   ├── qemu_run_coremark.png 
+│   └── se_dry.png 
+├── readme.md 
+└── thesis //相关的论文 
+    ├── Basic_block_distribution_analysis_to_find_periodic_behavior_and_simulation_points_in_applications.pdf 
+    └── ieeemicro96_r10000.pdf 
+ 
+5 directories, 21 files 
+ 
 
 
 ## 基础
