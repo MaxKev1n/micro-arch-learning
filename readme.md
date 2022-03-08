@@ -331,9 +331,27 @@ build/RISCV/gem5.opt configs/example/se.py --cmd=tests/test-progs/coremark/bin/c
 
 **相关资料：** 
 
-1. <a href="thesis/Basic_block_distribution_analysis_to_find_periodic_behavior_and_simulation_points_in_applications.pdf">Basic block distribution analysis to find periodic behavior and simulation points in applications</a>
-
+1. <a href="thesis/Basic_block_distribution_analysis_to_find_periodic_behavior_and_simulation_points_in_applications.pdf">Basic block distribution analysis to find periodic behavior and simulation points in applications</a> **PS：这篇文章过于古老，用处不太大**
 2. [关于SimPoint的一些碎碎念 - 知乎](https://zhuanlan.zhihu.com/p/380561873)
+3. <a href="thesis/ASPLOS-02-SimPoint.pdf">Automatically Characterizing Large Scale Program Behavior</a>
+
+
+
+>  SimPoint的一个优点：与具体的体系结构无关
+
+
+
+> 体系结构和微体系结构？
+>
+> shinezyy：体系结构是指程序员可见的，如寄存器之类的能被gdb查看的
+
+
+
+
+
+### 如何正确地阅读论文
+
+Google Scholar中搜索需要阅读的论文题目，然后点击**被引用的次数**，查看相关的较新的论文
 
 
 
@@ -365,3 +383,5 @@ build/RISCV/gem5.opt configs/example/se.py --cmd=tests/test-progs/coremark/bin/c
 [11] Keith-S-Thompson (2012) dhrystone[source code].https://github.com/Keith-S-Thompson/dhrystone.
 
 [12] Timothy Sherwood,Erez Perelman,Brad Calder.Basic Block Distribution Analysis to Find Periodic Behavior and Simulation Points in Applications[J].IEEE,2001.
+
+[13] Timothy Sherwood,Erez Perelman,Greg Hamerly,Brad Calder.Automatically Characterizing Large Scale Program Behavior[J].ACM SIGPLAN Notices,2002.
