@@ -2,6 +2,8 @@
 
 这是关于<a href=https://github.com/shinezyy/micro-arch-training>micro-arch-training</a>的一个learning过程，记录了@shinezyy给我布置的任务以及我们讨论过程中的一些有意义的问题
 
+> micro-arch-learning的仓库只是一个学习过程的记录，并不是用于解答micro-arch-training的答案。micro-arch-training建立的目的并不是解决问题本身，而是学习解决过程的方法，成为一个**independent researcher**。
+
 
 
 ## 基础
@@ -234,6 +236,18 @@ riscv64-unknown-elf-gcc -DPASS2  dry.c dry1.o  -o dry -static
 ![default_se_mem](img/default_se_mem.png)
 
 ![l3_se_mem](img/l3_se_mem.png)
+
+
+
+---
+
+### 新的任务
+
+*2022.3.10*
+
+least import顺序导出cache，cache使用什么方法替换，我就使用什么方法导出
+
+**TIPS：**在更高层的地方进行dump，不接触算法本身
 
 
 
