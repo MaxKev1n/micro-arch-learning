@@ -249,11 +249,11 @@ riscv64-unknown-elf-gcc -DPASS2  dry.c dry1.o  -o dry -static
 
 **在退出时Dump cache中所有的line的地址和内容**，以least import顺序导出cache，cache使用什么方法替换，我就使用什么方法导出
 
-**TIPS：**在更高层的地方进行dump，不接触算法本身
+**TIPS：** 在更高层的地方进行dump，不接触算法本身
 
 
 
-**WARNINGS：**gem5官方的资料中，存在部分错误：
+**WARNINGS：** gem5官方的资料中，存在部分错误：
 
 1. `*Object.py`中函数参数有错误
 2. `*.hh`以及`*.cc`文件中应该添加命名空间
