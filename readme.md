@@ -245,9 +245,21 @@ riscv64-unknown-elf-gcc -DPASS2  dry.c dry1.o  -o dry -static
 
 *2022.3.10*
 
-least import顺序导出cache，cache使用什么方法替换，我就使用什么方法导出
+**相关资料：**[gem5_ Event-driven programming](https://www.gem5.org/documentation/learning_gem5/part2/events/)
+
+**在退出时Dump cache中所有的line的地址和内容**，以least import顺序导出cache，cache使用什么方法替换，我就使用什么方法导出
 
 **TIPS：**在更高层的地方进行dump，不接触算法本身
+
+
+
+**WARNINGS：**gem5官方的资料中，存在部分错误：
+
+1. `*Object.py`中函数参数有错误
+2. `*.hh`以及`*.cc`文件中应该添加命名空间
+3. `*Object.py`中应添加`cxx_class='*'`
+
+
 
 
 
@@ -399,3 +411,5 @@ Google Scholar中搜索需要阅读的论文题目，然后点击**被引用的�
 [12] Timothy Sherwood,Erez Perelman,Brad Calder.Basic Block Distribution Analysis to Find Periodic Behavior and Simulation Points in Applications[J].IEEE,2001.
 
 [13] Timothy Sherwood,Erez Perelman,Greg Hamerly,Brad Calder.Automatically Characterizing Large Scale Program Behavior[J].ACM SIGPLAN Notices,2002.
+
+[14] gem5.org.gem5_ Event-driven programming[EB/OL].[2022-3-11].https://www.gem5.org/documentation/learning_gem5/part2/events/
