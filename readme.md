@@ -4,6 +4,8 @@
 
 > micro-arch-learning的仓库只是一个学习过程的记录，并不是用于解答micro-arch-training的答案。micro-arch-training建立的目的并不是解决问题本身，而是学习解决过程的方法，成为一个**independent researcher**。
 
+**周末多做做运动，不要长时间卷：）**
+
 
 
 ## 基础
