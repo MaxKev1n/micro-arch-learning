@@ -247,11 +247,23 @@ riscv64-unknown-elf-gcc -DPASS2  dry.c dry1.o  -o dry -static
 
 *2022.3.10*
 
-least import顺序导出cache，cache使用什么方法替换，我就使用什么方法导出
+**相关资料：**[gem5_ Event-driven programming](https://www.gem5.org/documentation/learning_gem5/part2/events/)
 
-**TIPS：**在更高层的地方进行dump，不接触算法本身
+**在退出时Dump cache中所有的line的地址和内容**，以least import顺序导出cache，cache使用什么方法替换，我就使用什么方法导出
+
+**TIPS：** 在更高层的地方进行dump，不接触算法本身
 
 
+
+**WARNINGS：** gem5官方的资料中，存在部分错误：
+
+1. `*Object.py`中函数参数有错误
+2. `*.hh`以及`*.cc`文件中应该添加命名空间
+3. `*Object.py`中应添加`cxx_class='*'`
+
+
+
+一点点个人的思路：根据TIPS，我可以将一个cache，例如Dcache当做一个黑盒，Dcache的内部如何实现替换与我无关，我仅需在simulation结束的时候，通过黑盒对外的接口将内部数据导出。cache的源码中应该也是不接触算法本身，通过函数调用算法来完成替换，那我可以尝试修改源码。在查看源码的过程中，我发现了如`BaseCache::handleFill`之类操作cache的函数。我可以在结束时，伪装大量的虚假block，来使用这些虚假的block调用替换函数，获取到算法算出的将要被替换的block，并将这些block dump。
 
 
 
@@ -401,3 +413,5 @@ Google Scholar中搜索需要阅读的论文题目，然后点击**被引用的�
 [12] Timothy Sherwood,Erez Perelman,Brad Calder.Basic Block Distribution Analysis to Find Periodic Behavior and Simulation Points in Applications[J].IEEE,2001.
 
 [13] Timothy Sherwood,Erez Perelman,Greg Hamerly,Brad Calder.Automatically Characterizing Large Scale Program Behavior[J].ACM SIGPLAN Notices,2002.
+
+[14] gem5.org.gem5_ Event-driven programming[EB/OL].[2022-3-11].https://www.gem5.org/documentation/learning_gem5/part2/events/
