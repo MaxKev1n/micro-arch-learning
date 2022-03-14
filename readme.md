@@ -265,6 +265,10 @@ riscv64-unknown-elf-gcc -DPASS2  dry.c dry1.o  -o dry -static
 
 一点点个人的思路：根据TIPS，我可以将一个cache，例如Dcache当做一个黑盒，Dcache的内部如何实现替换与我无关，我仅需在simulation结束的时候，通过黑盒对外的接口将内部数据导出。cache的源码中应该也是不接触算法本身，通过函数调用算法来完成替换，那我可以尝试修改源码。在查看源码的过程中，我发现了如`BaseCache::handleFill`之类操作cache的函数。我可以在结束时，伪装大量的虚假block，来使用这些虚假的block调用替换函数，获取到算法算出的将要被替换的block，并将这些block dump。
 
+经过一段时间的尝试，我暂时选择`BaseCache::handleEvictions`来输出line的数据和地址。
+
+对于event的处理，我阅读源码和有关资料后，决定修改src中的cpu源码，尝试在程序结束后添加一个event用于输出cache的数据。经过不断的debug，目前尝试修改`/src/cpu/base.cc`，在部分函数中添加debug-flag来查看运行过程。
+
 
 
 ## Debug
