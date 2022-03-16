@@ -269,6 +269,8 @@ riscv64-unknown-elf-gcc -DPASS2  dry.c dry1.o  -o dry -static
 
 对于event的处理，我阅读源码和有关资料后，决定修改src中的cpu源码，尝试在程序结束后添加一个event用于输出cache的数据。经过不断的debug，目前尝试修改`/src/cpu/base.cc`，在部分函数中添加debug-flag来查看运行过程。
 
+接下来的很长一段时间我在寻找cpu运行的开始和结束函数，最终定位到了`AtomicSimpleCPU::suspendContext`函数，在函数中添加一些`inform()`和`debug-flag`后发现这是cpu在退出时会调用的函数，那么可以尝试在这个函数开始的位置调用一个函数发起dump操作。但是令人烦恼的是cache并不是直接包含于cpu中，而是通过`port`进行调用，因此我又花了大量的时间去探索cpu对cache调用的过程，结果发现了包括`AtomicSimpleCPU::sendPacket`、`RequestPort::sendAtomic`、`AtomicRequestProtocol::send`、`BaseCache::recvAtomic`在内的函数会传递packet。因此，我修改了`packet`的源码，设置一个flag用于在结束时调用dump操作，经过一系列debug操作后，暂时能够在cpu结束程序运行时调用我在cache中自定义的函数。
+
 
 
 ## Debug
