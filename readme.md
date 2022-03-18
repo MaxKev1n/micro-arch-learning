@@ -269,9 +269,19 @@ riscv64-unknown-elf-gcc -DPASS2  dry.c dry1.o  -o dry -static
 
 对于event的处理，我阅读源码和有关资料后，决定修改src中的cpu源码，尝试在程序结束后添加一个event用于输出cache的数据。经过不断的debug，目前尝试修改`/src/cpu/base.cc`，在部分函数中添加debug-flag来查看运行过程。
 
-接下来的很长一段时间我在寻找cpu运行的开始和结束函数，最终定位到了`AtomicSimpleCPU::suspendContext`函数，在函数中添加一些`inform()`和`debug-flag`后发现这是cpu在退出时会调用的函数，那么可以尝试在这个函数开始的位置调用一个函数发起dump操作。但是令人烦恼的是cache并不是直接包含于cpu中，而是通过`port`进行调用，因此我又花了大量的时间去探索cpu对cache调用的过程，结果发现了包括`AtomicSimpleCPU::sendPacket`、`RequestPort::sendAtomic`、`AtomicRequestProtocol::send`、`BaseCache::recvAtomic`在内的函数会传递packet。因此，我修改了`packet`的源码，设置一个flag用于在结束时调用dump操作，经过一系列debug操作后，暂时能够在cpu结束程序运行时调用我在cache中自定义的函数。
+接下来的很长一段时间我在寻找cpu运行的开始和结束函数，最终定位到了`AtomicSimpleCPU::suspendContext`函数，在函数中添加一些`inform()`和`debug-flag`后发现这是cpu在退出时会调用的函数，那么可以尝试在这个函数开始的位置调用一个函数发起dump操作。但是令人烦恼的是cache并不是直接包含于cpu中，而是通过`port`进行调用，因此我又花了大量的时间去探索cpu对cache调用的过程，结果发现了包括`AtomicSimpleCPU::sendPacket`、`BaseCache::CpuSidePort::recvAtomic`、`RequestPort::sendAtomic`、`AtomicRequestProtocol::send`、`BaseCache::recvAtomic`在内的函数会传递packet。因此，我修改了`packet`的源码，设置一个flag用于在结束时调用dump操作，经过一系列debug操作后，暂时能够在cpu结束程序运行时调用我在cache中自定义的函数。
 
+然后，我开始寻找替换block的过程中调用的函数，例如`BaseCache::evictBlock`、`BaseCache::handleEvictions`、`BaseCache::allocateBlock`、`BaseCache::handleFill`、`Cache::handleAtomicReqMiss`、`BaseCache::recvAtomic`。根据这些函数，我仿写了相似的函数`Myevent*`，同时修改victim块发现后的逻辑。在发现victim块后，我直接将victim块所在的block重新插入一个新的block，来模拟写回cache的操作。暂时完成能够通过调用函数，返回给定地址后发现的victim块信息。
 
+在调试的过程中意外地发现`victim->print()`运行后有时候会将`pkt`的`VALID_ADDR`flag消除，这让我感到意外，作为一个问题，等有空的时候排查一下。最后，在查看源码的过程中，我找到了addr的set号移位数，因此在dump操作函数中根据block的个数循环调用`allocateBlock`函数，函数的addr变量根据之前找到的移位数进行移位。最终效果能够在不确定policy的情况下，将line全部dump出来。
+
+![dump_cache](img/dump_cache.png)
+
+**遗留的问题：**
+
+> `victim->print()`函数调用为什么会修改pkt的`VALID_ADDR`flag呢？
+
+> 为什么tag都是**0xffffffffffffffff**呢？
 
 ## Debug
 
