@@ -275,6 +275,8 @@ riscv64-unknown-elf-gcc -DPASS2  dry.c dry1.o  -o dry -static
 
 在调试的过程中意外地发现`victim->print()`运行后有时候会将`pkt`的`VALID_ADDR`flag消除，这让我感到意外，作为一个问题，等有空的时候排查一下。最后，在查看源码的过程中，我找到了addr的set号移位数，因此在dump操作函数中根据block的个数循环调用`allocateBlock`函数，函数的addr变量根据之前找到的移位数进行移位。最终效果能够在不确定policy的情况下，将line全部dump出来。
 
+在重新测试的过程中发现一些小问题，并进行了修改，例如`se.py`中的dcache默认应该为512 sets。
+
 ![dump_cache](img/dump_cache.png)
 
 **遗留的问题：**
@@ -282,6 +284,12 @@ riscv64-unknown-elf-gcc -DPASS2  dry.c dry1.o  -o dry -static
 > `victim->print()`函数调用为什么会修改pkt的`VALID_ADDR`flag呢？
 
 > 为什么tag都是**0xffffffffffffffff**呢？
+>
+> 对于这个问题，我并不能给出很明确的解释。但是，在我重新检测并修复一些bug后，发现后面的一些victim block，它们的tag并不为0xffffffffffffffff，同时它们的victim state也不为I，而是M或者E。关于*MOESI*，我去查询了相关的资料后得知这是一种缓存一致性协议，那么根据其状态，我猜测是因为这些cache line从未写入过数据，是无效的，其tag被默认设置为0xffffffffffffffff。
+>
+> * Modified：This cache has the only valid copy of the cache line, and has made changes to that copy.
+> * Exclusive：This cache has the only copy of the line, but the line is clean (unmodified).
+> * Invalid：This block is not valid; it must be fetched to satisfy any attempted access.
 
 ## Debug
 
