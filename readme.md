@@ -291,6 +291,36 @@ riscv64-unknown-elf-gcc -DPASS2  dry.c dry1.o  -o dry -static
 > * Exclusive：This cache has the only copy of the line, but the line is clean (unmodified).
 > * Invalid：This block is not valid; it must be fetched to satisfy any attempted access.
 
+最后，在查看@Shinezyy的仓库里的正确写法后，发现自己大部分工作都是错误的。对于结束后调用，我们可以调用一个名为`registerExitCall()`的函数来完成；对于dump cache，我们可以在`BaseSetAssoc`类中调用一些函数来完成。
+
+---
+
+### Batch running
+
+2022.3.24
+
+Tool Task: 利用[BatchTaskTemplate](https://github.com/shinezyy/DirtyStuff.git)批量运行GEM5。 具体地，拷贝一份`gem5tasks/restore_gcpt.py`，仔细阅读注释，修改里面的配置，把GEM5批量跑起来。
+
+这个任务相对来说还是比较简单的，主要是对几个文件目录的修改。但是，仓库中仅拥有SPEC06的Simpoint的相关文件，SPEC17的whitelist是缺失的，因此无法启动任务。如果想要运行SPEC17相关，需要使用`points/select_points.py`对SPEC17相关文件进行生成。
+
+> 对于生成文件的相关参数解释：
+>
+> max2: 每个workload选最多2个point
+>
+> cover0.5：每个workload选够0.5的coverage的点
+
+使用前应在`DirtyStuff`文件夹中使用`export PYTHONPATH=$(pwd)`，结束时使用`Ctrl+C`时应加上`killall -15 gem5.opt`
+
+**TIPS：`common/local_config.ly`中的`--l3_cache`选项与我们使用的Gem5工具中的选项并不匹配，需要修改**
+
+
+
+**运行结果：**
+
+<img src="img/batch_terminal.png" alt="batch_terminal" style="zoom:67%;float:left" />
+
+<img src="img/batch.png" alt="batch" style="zoom:67%;float:left" />
+
 ## Debug
 
 
@@ -399,9 +429,27 @@ build/RISCV/gem5.opt configs/example/se.py --cmd=tests/test-progs/coremark/bin/c
 
 
 
+## 生成Rootfs和kernel并启动
+
+@Shinezyy似乎忘记在他的仓库里加上这个任务了：）
+
+任务指引：[Linux Kernel for XiangShan in EMU]([XiangShan-doc/Linux Kernel 的构建.md at main · OpenXiangShan/XiangShan-doc (github.com)](https://github.com/OpenXiangShan/XiangShan-doc/blob/main/tutorial/others/Linux Kernel 的构建.md))
+
+**过程中的一些问题：**大部分的工作可以根据md指引完成，除了生成Rootfs！！！编译Rootfs时会失败，首先是怀疑RiscV编译链的选择，但是更改为`RV64GC`后仍然出现相同问题，暂时搁置不管。另外一个小问题是在运行NEMU时，遭遇了assert问题，对于这个问题，我们需要注释掉提示里的`assert 0`。
+
+**TIPS：NEMU仓库里有配置好的config，不需要自己调整**
+
+> @shinezyy：主要是配置好kernel，然后编bbl，编bbl的时候会自动把kernel填到bbl后面，NEMU只需要用bbl.bin启动就可以了
 
 
-### 如何正确地阅读论文
+
+**运行结果：**
+
+<img src="img/nemu_bbl.png" alt="nemu_bbl" style="zoom:67%;float:left" />
+
+
+
+## 如何正确地阅读论文
 
 Google Scholar中搜索需要阅读的论文题目，然后点击**被引用的次数**，查看相关的较新的论文
 
