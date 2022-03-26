@@ -435,7 +435,7 @@ build/RISCV/gem5.opt configs/example/se.py --cmd=tests/test-progs/coremark/bin/c
 
 任务指引：[Linux Kernel for XiangShan in EMU]([XiangShan-doc/Linux Kernel 的构建.md at main · OpenXiangShan/XiangShan-doc (github.com)](https://github.com/OpenXiangShan/XiangShan-doc/blob/main/tutorial/others/Linux Kernel 的构建.md))
 
-**过程中的一些问题：**大部分的工作可以根据md指引完成，除了生成Rootfs！！！编译Rootfs时会失败，首先是怀疑RiscV编译链的选择，但是更改为`RV64GC`后仍然出现相同问题，暂时搁置不管。另外一个小问题是在运行NEMU时，遭遇了assert问题，对于这个问题，我们需要注释掉提示里的`assert 0`。
+**过程中的一些问题：** 大部分的工作可以根据md指引完成，除了生成Rootfs！！！编译Rootfs时会失败，首先是怀疑RiscV编译链的选择，但是更改为`RV64GC`后仍然出现相同问题，暂时搁置不管。另外一个小问题是在运行NEMU时，遭遇了assert问题，对于这个问题，我们需要注释掉提示里的`assert 0`。
 
 **TIPS：NEMU仓库里有配置好的config，不需要自己调整**
 
