@@ -457,7 +457,7 @@ build/RISCV/gem5.opt configs/example/se.py --cmd=tests/test-progs/coremark/bin/c
 
 **任务介绍:** 使用**qemu**运行**riscv64**版本的**debian**，并且启动**python**和**java**
 
-**完成过程:**关于使用qemu启动riscv64的debian，网上相关的教程很多，个人推荐知乎上的一篇教程[Debian RISC-V构建 - 知乎](https://zhuanlan.zhihu.com/p/440467508)，但是需要注意的是，宿主机系统建议与文中所用的系统保持一致，因为我在Ubuntu 20.04LTS上安装时是无法成功的，但是切换到Debian11后可以完成安装。完成debian的启动后，python和java启动就十分简单了，可以使用`apt-get install *`命令直接安装，值得注意的是由于源的问题，安装过程长达数个小时。安装完成后，编写了简单的测试程序并进行测试，python和java可以正常使用。
+**完成过程:** 关于使用qemu启动riscv64的debian，网上相关的教程很多，个人推荐知乎上的一篇教程[Debian RISC-V构建 - 知乎](https://zhuanlan.zhihu.com/p/440467508)，但是需要注意的是，宿主机系统建议与文中所用的系统保持一致，因为我在Ubuntu 20.04LTS上安装时是无法成功的，但是切换到Debian11后可以完成安装。完成debian的启动后，python和java启动就十分简单了，可以使用`apt-get install *`命令直接安装，值得注意的是由于源的问题，安装过程长达数个小时。安装完成后，编写了简单的测试程序并进行测试，python和java可以正常使用。
 
 
 
