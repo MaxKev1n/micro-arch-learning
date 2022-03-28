@@ -321,6 +321,8 @@ Tool Task: 利用[BatchTaskTemplate](https://github.com/shinezyy/DirtyStuff.git)
 
 <img src="img/batch.png" alt="batch" style="zoom:67%;float:left" />
 
+
+
 ## Debug
 
 
@@ -449,6 +451,28 @@ build/RISCV/gem5.opt configs/example/se.py --cmd=tests/test-progs/coremark/bin/c
 
 
 
+
+
+## QEMU启动Debian
+
+**任务介绍:** 使用**qemu**运行**riscv64**版本的**debian**，并且启动**python**和**java**
+
+**完成过程:**关于使用qemu启动riscv64的debian，网上相关的教程很多，个人推荐知乎上的一篇教程[Debian RISC-V构建 - 知乎](https://zhuanlan.zhihu.com/p/440467508)，但是需要注意的是，宿主机系统建议与文中所用的系统保持一致，因为我在Ubuntu 20.04LTS上安装时是无法成功的，但是切换到Debian11后可以完成安装。完成debian的启动后，python和java启动就十分简单了，可以使用`apt-get install *`命令直接安装，值得注意的是由于源的问题，安装过程长达数个小时。安装完成后，编写了简单的测试程序并进行测试，python和java可以正常使用。
+
+
+
+**任务结果:**
+
+<img src="img/qemu_debian.png" alt="qemu_debian" style="zoom:67%;float:left" />
+
+<img src="img/qemu_debian_python.png" alt="qemu_debian_python" style="zoom:67%;float:left" />
+
+<img src="img/qemu_debian_java.png" alt="qemu_debian_java" style="zoom:67%;float:left" />
+
+
+
+
+
 ## 如何正确地阅读论文
 
 Google Scholar中搜索需要阅读的论文题目，然后点击**被引用的次数**，查看相关的较新的论文
@@ -456,7 +480,6 @@ Google Scholar中搜索需要阅读的论文题目，然后点击**被引用的�
 
 
 ## 引用
-
 
 [1] ArchShineZ.想做芯片？入门计算机系统结构的简略指南[EB/OL].(2021-8-15)[2022-3-8].https://zhuanlan.zhihu.com/p/400088344
 
@@ -487,3 +510,6 @@ Google Scholar中搜索需要阅读的论文题目，然后点击**被引用的�
 [13] Timothy Sherwood,Erez Perelman,Greg Hamerly,Brad Calder.Automatically Characterizing Large Scale Program Behavior[J].ACM SIGPLAN Notices,2002.
 
 [14] gem5.org.gem5_ Event-driven programming[EB/OL].[2022-3-11].https://www.gem5.org/documentation/learning_gem5/part2/events/
+
+[15] Jean.Debian RISC-V构建[EB/OL].(2021-12-3)[2022-3-28].https://zhuanlan.zhihu.com/p/440467508
+
