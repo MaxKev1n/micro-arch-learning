@@ -471,6 +471,37 @@ build/RISCV/gem5.opt configs/example/se.py --cmd=tests/test-progs/coremark/bin/c
 
 
 
+## NEMU启动Debian
+
+**任务要求：**
+
+- 用RV qemu启动debian sdcard，在sdcard上装好java和python的环境
+- 通过emergency mode让debian启动后第一条命令运行java或python
+- 用NEMU启动这个sdcard 镜像
+
+**相关资料：**
+
+* [riscv64 debian镜像制作](https://github.com/OpenXiangShan/NEMU/tree/master/resource/debian)
+* [Linux Kernel for XiangShan in EMU](https://github.com/OpenXiangShan/XiangShan-doc/blob/main/tutorial/others/Linux%20Kernel%20%E7%9A%84%E6%9E%84%E5%BB%BA.md)
+
+
+
+这个任务大部分工作都比较简单，主要是由于源的原因导致的下载速度极慢以及镜像在物理机和服务器之前传输的时间较长。值得注意的是以下问题，首先是宿主机系统，亲测Ubuntu20.04LTS以及Debian11都是不可行的，或者存在部分问题的，建议按照资料中的要求使用Debian10。除此之外，在安装部分软件时无法成功，并且提示*the keytool command requires a mounted proc fs (/proc).*，使用`mount -t proc proc /proc`可以解决该问题，但是在`exit`退出chroot之前，必须将`/proc` umount，否则无法执行指令`sudo umount /mnt`，最终导致镜像出现问题，无法在NEMU中正常启动。在nemu启动Debian时可能会出现*No filesystem could mount root*的问题，结合上下文，发现是bootargs cmd的问题，在`riscv-pk/dts/platform.dtsi`中修改相应代码为`/dev/mmcblk0p1`即可。
+
+**存在的问题：** 目前存在问题，`javac`目前没有出现结果，可能是swap分区无法写入的原因和java性能原因
+
+> 大量输出write-error on swap-device的原因？
+>
+> @shinezyy：nemu不支持sdcard写入，所以得写到ramfs
+
+
+
+**运行结果：**
+
+![nemu_debian](img/nemu_debian.png)
+
+![nemu_debian1](img/nemu_debian1.png)
+
 
 
 ## 如何正确地阅读论文
