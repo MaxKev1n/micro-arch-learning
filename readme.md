@@ -295,6 +295,24 @@ riscv64-unknown-elf-gcc -DPASS2  dry.c dry1.o  -o dry -static
 
 ---
 
+### Dump Branch Result
+
+**任务要求：** TimpingSimple CPU中增加一个dump 跳转指令结果的功能，在gem5退出的时候，Dump最近X条控制指令（分支、跳转）的方向、地址
+
+
+
+有了上个任务的经验以后，这个任务就比较简单了。只需按照上个任务的思路，在TimpingSimple CPU源码中添加一个dump函数并为option添加相关代码，最后通过`registerExitCall()`函数在结束时调用就可以了。CPU源码中有存储指令状态的数据结构，可以获取到该指令的PC，下一条指令PC和跳转结果，我们只需在运行时将指令状态存储到queue中，在程序结束时输出即可。
+
+> 由于压缩指令的存在，不可以单纯的用PC == nextPC + 4来判断是否跳转
+
+**运行结果：**
+
+<img src="img/dump_branch.png" alt="dump_branch" style="zoom:67%;float:left" />
+
+
+
+---
+
 ### Batch running
 
 2022.3.24
